@@ -52,16 +52,18 @@ One of the major challenges in developing the farmer-consumer app will be to ens
     ```sh
     npm --version
     ```
-   If not, install the LTS version of Node and the proceed
+   If not, install the LTS version of Node and then proceed
 4. Install all the dependencies
     ```sh
     npm i
     ```
 5.  Execute the following command from root directory
     ```sh
-    mkdir -p Firebase && touch firebase-config.json
+    mkdir -p Firebase && touch Firebase/firebase-config.json
     ```
-6. Open the Firebase Folder and the open firebase-config.json and fill the following configuration
+6. Open the Firebase Folder and open firebase-config.json
+   
+   Copy the below config and fill it with correct configuration from Firebase Console -> Project details
    ```js
     import { initializeApp } from "firebase/app";
     import { getAuth } from "firebase/auth";
