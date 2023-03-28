@@ -63,21 +63,18 @@ One of the major challenges in developing the farmer-consumer app will be to ens
     ```
 6. Open the Firebase Folder and the open firebase-config.json and fill the following configuration
    ```js
-
-    import {initializeApp} from "firebase/app";
+    import { initializeApp } from "firebase/app";
     import { getAuth } from "firebase/auth";
-    import {getFirestore} from "firebase/firestore";
-
-
+    import { getFirestore } from "firebase/firestore";
 
     const firebaseConfig = {
-    apiKey: "YOUR-API-KEY",
-    authDomain: "YOUR-AUTH-DOMAIN",
-    projectId: "YOUR-PROJECT-ID",
-    storageBucket: "YOUR-STORAGE-BUCKET",
-    messagingSenderId: "YOUR-SENDER-ID",
-    appId: "YOUR-APP-ID",
-    measurementId: "YOUR-MEASUREMENT-ID",
+        apiKey: "YOUR-API-KEY",
+        authDomain: "YOUR-AUTH-DOMAIN",
+        projectId: "YOUR-PROJECT-ID",
+        storageBucket: "YOUR-STORAGE-BUCKET",
+        messagingSenderId: "YOUR-SENDER-ID",
+        appId: "YOUR-APP-ID",
+        measurementId: "YOUR-MEASUREMENT-ID",
     };
 
     // Initialize Firebase
