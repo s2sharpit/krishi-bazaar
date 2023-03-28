@@ -1,0 +1,26 @@
+{
+  "name": "krishi-bazaar",
+  "version": "1.0.0",
+  "description": "Our app connects local farmers directly to consumers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-dipanshu/krishi-bazaar.git"
+  },
+  "keywords": [
+    "e-commerce"
+  ],
+  "author": "Dipanshu, Tushar, Anshika, Sriya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/i-dipanshu/krishi-bazaar/issues"
+  },
+  "homepage": "https://github.com/i-dipanshu/krishi-bazaar#readme",
+  "dependencies": {
+    "firebase": "^9.18.0",
+    "yarn": "^1.22.19"
+  }
+}
