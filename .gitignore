@@ -1,7 +1,7 @@
 # OSX
 #
 .DS_Store
-
+.env
 # Xcode
 #
 build/
@@ -39,7 +39,7 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
-firebase-config.js
+
 
 # fastlane
 #
