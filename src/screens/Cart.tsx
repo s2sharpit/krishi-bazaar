@@ -29,9 +29,9 @@ export default function Cart ({ navigation }: { navigation: any }) {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
             <Text style={styles.headerText}>Cart</Text>
-        </View>
+        </View> */}
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   checkoutButton: {
-    backgroundColor: "#008000",
+    backgroundColor: "#35C759",
     borderRadius: 8,
     paddingVertical: 10,
     paddingHorizontal: 20,

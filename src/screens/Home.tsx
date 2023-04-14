@@ -10,29 +10,13 @@ import {
 import { Logo } from "../../assets";
 import categoriesData from "../data/categoriesData";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Nav from "../components/Nav";
 
 export default function Home({ navigation }: { navigation: any }) {
   const [search, setSearch] = useState("");
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        {/* <Image style={styles.logo} source={Logo} /> */}
-        {/* <Text style={styles.headerText}>Krishi Bazaar</Text> */}
-        <View style={styles.wrapper}>
-          <TextInput
-            style={styles.input}
-            placeholder="Search Here"
-            value={search}
-            onChangeText={setSearch}
-          />
-          <MaterialIcons name="search" size={20} color={"black"} />
-        </View>
-        <TouchableOpacity style={styles.headerButton}>
-          {/* <Text style={styles.headerButtonText}>Profile</Text> */}
-          <MaterialIcons name="person" size={24} color={"black"} />
-        </TouchableOpacity>
-      </View>
       <View style={styles.body}>
         {categoriesData.map((data) => (
           <Categories key={data.id} data={data} />
@@ -46,20 +30,7 @@ export default function Home({ navigation }: { navigation: any }) {
         onPress={() => navigation.navigate("ProductDetail")}>
         <Text style={styles.buttonText}>Product</Text>
       </TouchableOpacity>
-      <View style={styles.nav}>
-        <View style={styles.navItem}>
-          <MaterialIcons name="home" size={24} color={"black"} />
-          <Text>Home</Text>
-        </View>
-        <View style={styles.navItem}>
-          <MaterialIcons name="settings" size={24} color={"black"} />
-          <Text>Settings</Text>
-        </View>
-        <TouchableOpacity style={styles.navItem} onPress={()=> navigation.navigate("Cart")}>
-          <MaterialIcons name="shopping-cart" size={24} color={"black"} />
-          <Text>Cart</Text>
-        </TouchableOpacity>
-      </View>
+      <Nav navigation={navigation} />
     </View>
   );
 }
@@ -76,10 +47,11 @@ function Categories({ data }: { data: any }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#EFEFEF",
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: 50,
+    paddingTop: 20,
+    height: "100%",
   },
   header: {
     flexDirection: "row",
@@ -142,7 +114,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   categoryButton: {
-    backgroundColor: "#EFEFEF",
+    backgroundColor: "#fff",
     padding: 10,
     margin: 10,
     borderRadius: 10,
@@ -180,20 +152,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
-  },
-  nav: {
-    position: "absolute",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    width: "100%",
-    paddingHorizontal: 20,
-    marginBottom: 20,
-    bottom: 0,
-  },
-  navItem: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: 24,
   },
 });
