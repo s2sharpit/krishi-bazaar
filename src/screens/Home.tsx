@@ -17,27 +17,34 @@ export default function Home({ navigation }: { navigation: any }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.body}>
-        {categoriesData.map((data) => (
-          <Categories key={data.id} data={data} />
-        ))}
-      </View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>View All</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      <View style={styles.wrapper}>
+        <Text style={styles.subTitle}>Categories</Text>
+        <View style={styles.body}>
+          {categoriesData.map((data) => (
+            <Categories key={data.id} data={data} navigation={navigation} />
+          ))}
+        </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Products")}
+        >
+          <Text style={styles.buttonText}>View All</Text>
+        </TouchableOpacity>
+        {/* <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("ProductDetail")}>
+        onPress={() => navigation.navigate("ProductDetail")}
+      >
         <Text style={styles.buttonText}>Product</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      </View>
       <Nav navigation={navigation} />
     </View>
   );
 }
 
-function Categories({ data }: { data: any }) {
+function Categories({ data, navigation }: { data: any, navigation: any }) {
   return (
-    <TouchableOpacity style={styles.categoryButton}>
+    <TouchableOpacity style={styles.categoryButton} onPress={()=>navigation.navigate("Products")}>
       <Image style={styles.categoryIcon} source={data.image} />
       <Text style={styles.categoryText}>{data.name}</Text>
     </TouchableOpacity>
@@ -52,6 +59,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingTop: 20,
     height: "100%",
+    borderTopWidth: 1,
+    borderTopColor: "lightgray",
   },
   header: {
     flexDirection: "row",
@@ -62,16 +71,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   wrapper: {
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "80%",
-    height: 35,
-    padding: 5,
-    paddingRight: 10,
+    width: "100%",
     borderColor: "#ccc",
     borderRadius: 50,
-    backgroundColor: "#EFEFEF",
+    // backgroundColor: "#EFEFEF",
   },
   input: {
     width: "90%",
@@ -82,6 +87,12 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 50,
     backgroundColor: "#EFEFEF",
+  },
+  subTitle: {
+    fontSize: 22,
+    fontWeight: '600',
+    marginBottom: 10,
+    width: '80%',
   },
   logo: {
     width: 30,

@@ -1,68 +1,87 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 
-export default function Payment () {
+const PaymentScreen = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
 
   const handlePayment = () => {
-    // handle payment logic here
+    // Handle payment logic
   };
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
-      <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 20 }}>
-        Payment Details
-      </Text>
-      <View style={{ marginBottom: 20 }}>
-        <Text style={{ marginBottom: 5 }}>Card Number</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Enter Payment Details</Text>
+      <View style={styles.form}>
         <TextInput
-          style={{ backgroundColor: "#f0f0f0", padding: 10, borderRadius: 5 }}
-          onChangeText={setCardNumber}
+          style={styles.input}
+          placeholder="Card Number"
           value={cardNumber}
-          keyboardType="numeric"
-          placeholder="1234 5678 9012 3456"
+          onChangeText={setCardNumber}
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Expiry Date (MM/YY)"
+          value={expiryDate}
+          onChangeText={setExpiryDate}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="CVV"
+          value={cvv}
+          onChangeText={setCvv}
+          secureTextEntry={true}
+        />
+        <TouchableOpacity style={styles.button} onPress={handlePayment}>
+          <Text style={styles.buttonText}>Pay Now</Text>
+        </TouchableOpacity>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginBottom: 20,
-        }}
-      >
-        <View style={{ flex: 1, marginRight: 10 }}>
-          <Text style={{ marginBottom: 5 }}>Expiry Date</Text>
-          <TextInput
-            style={{ backgroundColor: "#f0f0f0", padding: 10, borderRadius: 5 }}
-            onChangeText={setExpiryDate}
-            value={expiryDate}
-            keyboardType="numeric"
-            placeholder="MM/YY"
-          />
-        </View>
-        <View style={{ flex: 1, marginLeft: 10 }}>
-          <Text style={{ marginBottom: 5 }}>CVV</Text>
-          <TextInput
-            style={{ backgroundColor: "#f0f0f0", padding: 10, borderRadius: 5 }}
-            onChangeText={setCvv}
-            value={cvv}
-            keyboardType="numeric"
-            placeholder="123"
-          />
-        </View>
-      </View>
-      <TouchableOpacity
-        style={{ backgroundColor: "#00bfff", padding: 15, borderRadius: 5 }}
-        onPress={handlePayment}
-      >
-        <Text
-          style={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}
-        >
-          Pay Now
-        </Text>
-      </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    // justifyContent: "center",
+    paddingTop: 60,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  form: {
+    width: "80%",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: "#35C759",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
+
+export default PaymentScreen;

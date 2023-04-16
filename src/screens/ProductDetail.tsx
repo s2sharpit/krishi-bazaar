@@ -1,51 +1,64 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { Vegetables } from "../../assets";
 
-const ProductDetailScreen = () => {
+const ProductDetail = ({ navigation }: { navigation: any}) => {
+  const { id, name, image, description, price, quantity, seller } = {
+    id: 1,
+    name: "Organic Apples",
+    price: 110,
+    quantity: 10,
+    description:
+      "Fresh and delicious organic apples grown locally in the valley.",
+    image: Vegetables,
+    seller: {
+      id: 123,
+      name: "Green Valley Farm",
+      location: "123 Main St, Green Valley, CA",
+      rating: 4.5,
+      reviews: 25,
+    },
+  };
+
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Image
-        source={require("../../assets/logo.png")}
-        style={styles.image}
-      />
-      <View style={styles.details}>
-        <Text style={styles.name}>Organic Tomatoes</Text>
-        <Text style={styles.price}>$2.99/lb</Text>
-        <View style={styles.quantityContainer}>
-          <Text style={styles.quantityLabel}>Quantity:</Text>
-          <Text style={styles.quantity}>1 lb</Text>
+    <View style={styles.container}>
+      <Image source={image} style={styles.image} resizeMode="cover" />
+      <View style={styles.contentContainer}>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.description}>{description}</Text>
+        <Text style={styles.price}>Price: ₹{price}</Text>
+        <Text style={styles.quantity}>Quantity: {quantity}</Text>
+        <View style={styles.sellerContainer}>
+          <Text style={styles.seller}>Sold by:</Text>
+          <Text style={styles.sellerName}>{seller.name}</Text>
+          <Text style={styles.sellerLocation}>{seller.location}</Text>
+          <View style={styles.ratingContainer}>
+            <Text style={styles.rating}>Rating:</Text>
+            <Text style={styles.ratingValue}>{seller.rating}</Text>
+          </View>
         </View>
-        <Text style={styles.description}>
-          These organic tomatoes are grown locally and are free of pesticides
-          and other harmful chemicals.
-        </Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Add to Cart</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Buy Now</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Cart")}
+        >
+          <Text style={styles.buttonText}>Add to Cart</Text>
+        </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    // paddingTop: 40,
+    backgroundColor: "#efefef",
   },
   image: {
     width: "100%",
     height: 300,
-    resizeMode: "cover",
   },
-  details: {
+  contentContainer: {
     padding: 20,
   },
   name: {
@@ -53,46 +66,65 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
-  price: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#008000",
-    marginBottom: 10,
-  },
-  quantityContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  quantityLabel: {
-    fontSize: 18,
-    marginRight: 10,
-  },
-  quantity: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
   description: {
     fontSize: 16,
     marginBottom: 10,
   },
-  buttonContainer: {
+  price: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  quantity: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  sellerContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  seller: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginRight: 10,
+  },
+  sellerName: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginRight: 5,
+  },
+  sellerLocation: {
+    fontSize: 16,
+  },
+  ratingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 20,
+  },
+  rating: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginRight: 5,
+  },
+  ratingValue: {
+    fontSize: 16,
   },
   button: {
     backgroundColor: "#008000",
-    padding: 10,
+    padding: 14,
     borderRadius: 5,
-    width: "45%",
+    alignSelf: "center",
+    width: 300,
+    marginTop: 40,
   },
   buttonText: {
-    fontSize: 18,
-    fontWeight: "bold",
     color: "#fff",
+    fontSize: 20,
     textAlign: "center",
+    fontWeight: "bold",
   },
 });
 
-export default ProductDetailScreen;
+export default ProductDetail;

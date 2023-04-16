@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+// import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Welcome from './src/screens/Welcome';
@@ -13,6 +13,7 @@ import Payment from './src/screens/Payment';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Contact from './src/screens/Contact';
 import Products from './src/screens/Products';
+import Profile from './src/screens/Profile';
 
 
 export default function App() {
@@ -20,6 +21,8 @@ export default function App() {
   
   return (
     <NavigationContainer>
+      <StatusBar backgroundColor="#ddd" barStyle="dark-content" />
+
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
@@ -31,11 +34,11 @@ export default function App() {
           },
         }}
       >
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Splash"
           component={Splash}
           options={{ headerShown: false }}
-        />
+        /> */}
         {/* <Stack.Screen name="Welcome" component={Welcome} /> */}
         <Stack.Screen
           name="Home"
@@ -44,7 +47,7 @@ export default function App() {
             headerTitle: "Kisaan Bazaar",
             // Add a placeholder button without the `onPress` to avoid flicker
             headerRight: () => (
-              <TouchableOpacity onPress={()=>navigation.navigate("Contact")}>
+              <TouchableOpacity onPress={() => navigation.navigate("Contact")}>
                 <MaterialIcons
                   name="support-agent"
                   size={24}
@@ -55,6 +58,7 @@ export default function App() {
             ),
           })}
         />
+        <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Products" component={Products} />
         <Stack.Screen name="ProductDetail" component={ProductDetail} />
         <Stack.Screen name="Cart" component={Cart} />
