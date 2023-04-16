@@ -4,9 +4,9 @@ import { SplashImg } from "../../assets";
 
 const SplashScreen = ({ navigation }: {navigation: any}) => {
   useEffect(() => {
-    // setTimeout(() => {
+    setTimeout(() => {
       navigation.replace("Home");
-    // }, 3000); // change the time as per your requirement
+    }, 2000); // change the time as per your requirement
   }, []);
 
   return (

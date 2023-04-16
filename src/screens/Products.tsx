@@ -1,23 +1,95 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { TextInput } from 'react-native-gesture-handler'
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import categoriesData from "../data/categoriesData";
+import { Vegetables } from "../../assets";
+import Nav from "../components/Nav";
 
-export default function Products() {
+export default function Products({navigation}: {navigation: any}) {
+
+  const [products, setProducts] = useState([
+    {
+      id: "1",
+      name: "Tomatoes",
+      price: 40,
+      image: Vegetables,
+    },
+    {
+      id: "2",
+      name: "Apples",
+      price: 100,
+      image: Vegetables,
+    },
+    {
+      id: "3",
+      name: "Potatoes",
+      price: 20,
+      image: Vegetables,
+    },
+    {
+      id: "4",
+      name: "Carrots",
+      price: 60,
+      image: Vegetables,
+    },
+    {
+      id: "5",
+      name: "Lettuce",
+      price: 80,
+      image: Vegetables,
+    },
+  ]);
+
+  const Categories = ({ data, navigation }: { data: any; navigation: any }) => {
+    return (
+      <TouchableOpacity style={styles.circleWrapper}>
+        <View style={styles.circle}>
+          <Image source={data.image} style={styles.img} />
+        </View>
+        <Text style={styles.textCat}>{data.name}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderProductItem = ({ item }: { item: any }) => (
+    <TouchableOpacity style={styles.productItemContainer} onPress={()=>navigation.navigate("ProductDetail")}>
+      <Image style={styles.productItemImage} source={item.image} />
+      <View style={styles.productItemDetails}>
+        <Text style={styles.productItemName}>{item.name}</Text>
+        <Text style={styles.productItemPrice}>₹{item.price.toFixed(2)}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
       {/* <Text>Products</Text> */}
       <View style={styles.searchBox}>
         <MaterialIcons name="search" size={22} color={"gray"} />
-        <TextInput style={styles.input} placeholder='Search for Product...' />
+        <TextInput style={styles.input} placeholder="Search for Product..." />
       </View>
-      <View>
-
-      <View style={styles.circleWrapper}>
-        <View style={styles.circle}></View>
-        <Text style={styles.textCat}>Vegetables</Text>
+      <View style={styles.wrapper}>
+        {categoriesData.map((data) => (
+          <Categories key={data.id} data={data} navigation={navigation} />
+        ))}
       </View>
+      <View style={styles.products}>
+        <FlatList
+          data={products}
+          renderItem={renderProductItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.productListContainer}
+        />
       </View>
+      <Nav navigation={navigation} />
     </View>
   );
 }
@@ -30,6 +102,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     // paddingTop: 20,
     height: "100%",
+  },
+  products: {
+    flex: 1,
+    // backgroundColor: "#fff",
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    width: '100%',
   },
   searchBox: {
     flexDirection: "row",
@@ -52,8 +131,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000",
   },
+  wrapper: {
+    width: "100%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    paddingHorizontal: 20,
+  },
   circleWrapper: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   circle: {
     width: 50,
@@ -71,9 +157,41 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  img: {
+    width: 50,
+    height: 50,
+    borderRadius: 50 / 2,
+  },
   textCat: {
     fontSize: 13,
     // fontWeight: "bold",
-    marginTop: 10,
-  }
+    // marginTop: 10,
+  },
+  productListContainer: {
+    paddingBottom: 20,
+  },
+  productItemContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+    backgroundColor: 'white',
+    paddingHorizontal: 10,
+    borderRadius: 20,
+  },
+  productItemImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+  productItemDetails: {
+    marginLeft: 20,
+  },
+  productItemName: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  productItemPrice: {
+    fontSize: 16,
+    marginTop: 5,
+  },
 });

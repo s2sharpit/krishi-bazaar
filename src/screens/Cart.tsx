@@ -1,140 +1,201 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { Fruits, Vegetables } from '../../assets';
 
-export default function Cart ({ navigation }: { navigation: any }) {
-  const data = [
-    { id: '1', name: 'Organic Apples', quantity: '2', price: '$5.99' },
-    { id: '2', name: 'Fresh Tomatoes', quantity: '1', price: '$3.49' },
-    { id: '3', name: 'Local Honey', quantity: '3', price: '$8.99' },
-  ];
+export default function Cart({ navigation }: { navigation: any}) {
+  const [cartItems, setCartItems] = useState([
+    {
+      id: 1,
+      name: 'Organic Apples',
+      image: Fruits,
+      price: 110,
+      quantity: 2,
+    },
+    {
+      id: 2,
+      name: 'Fresh Carrots',
+      image: Vegetables,
+      price: 60,
+      quantity: 3,
+    },
+  ]);
 
-  const renderItem = ({ item }: {item: any}) => (
-    <View style={styles.itemContainer}>
-      <View style={styles.itemLeft}>
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemPrice}>{item.price}</Text>
-      </View>
-      <View style={styles.itemRight}>
-        <TouchableOpacity style={styles.itemButton}>
-          <Text style={styles.itemButtonText}>-</Text>
+  const handleRemoveItem = (item: any) => {
+    const newCartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
+    setCartItems(newCartItems);
+  };
+
+  const handleQuantityChange = (item: any, value: number) => {
+    const newCartItems = cartItems.map((cartItem) => {
+      if (cartItem.id === item.id) {
+        return { ...cartItem, quantity: cartItem.quantity + value };
+      }
+      return cartItem;
+    });
+    setCartItems(newCartItems);
+  };
+
+  const renderCartItem = (item: any) => {
+    return (
+      <View key={item.id} style={styles.cartItem}>
+        <Image source={item.image} style={styles.itemImage} />
+        <View style={styles.itemDetails}>
+          <Text style={styles.itemName}>{item.name}</Text>
+          <Text style={styles.itemPrice}>${item.price.toFixed(2)}</Text>
+          <View style={styles.quantityControl}>
+            <TouchableOpacity disabled={item.quantity<=1} style={styles.quantityButton} onPress={() => handleQuantityChange(item, -1)}>
+              <Text style={styles.quantityButtonText}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.quantity}>{item.quantity}</Text>
+            <TouchableOpacity style={styles.quantityButton} onPress={() => handleQuantityChange(item, 1)}>
+              <Text style={styles.quantityButtonText}>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <TouchableOpacity style={styles.removeButton} onPress={() => handleRemoveItem(item)}>
+          <Text style={styles.removeButtonText}>Remove</Text>
         </TouchableOpacity>
-        <Text style={styles.itemQuantity}>{item.quantity}</Text>
-        <TouchableOpacity style={styles.itemButton}>
-          <Text style={styles.itemButtonText}>+</Text>
-        </TouchableOpacity>
       </View>
-    </View>
-  );
+    );
+  };
+
+  const renderEmptyCart = () => {
+    return (
+      <View style={styles.emptyCart}>
+        <Text style={styles.emptyCartText}>Your cart is empty</Text>
+      </View>
+    );
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-        {/* <View style={styles.header}>
-            <Text style={styles.headerText}>Cart</Text>
-        </View> */}
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        contentContainerStyle={styles.listContainer}
-      />
-      <View style={styles.totalContainer}>
-        <Text style={styles.totalText}>Total: $22.46</Text>
-        <TouchableOpacity style={styles.checkoutButton} onPress={()=>navigation.navigate("Payment")}>
-          <Text style={styles.checkoutButtonText}>Proceed to Buy</Text>
-        </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.cartList}>
+        {cartItems.length > 0 ? cartItems.map(renderCartItem) : renderEmptyCart()}
       </View>
-    </SafeAreaView>
+      <View style={styles.totalSection}>
+        <Text style={styles.totalText}>Total:</Text>
+        <Text style={styles.totalAmount}>
+          ₹{cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}
+        </Text>
+      </View>
+      <TouchableOpacity style={styles.checkoutButton} onPress={()=>navigation.navigate("Payment")}>
+        <Text style={styles.checkoutButtonText}>Proceed to checkout</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#efefef",
+    padding: 20,
   },
-  header: {
+  cartList: {
+    flex: 1,
+  },
+  cartItem: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    marginVertical: 20,
+    marginBottom: 20,
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 5,
   },
-  headerText: {
-    fontSize: 24,
-    fontWeight: "bold",
+  itemImage: {
+    width: 80,
+    height: 80,
+    marginRight: 20,
+    borderRadius: 40,
   },
-  listContainer: {
-    paddingHorizontal: 20,
-  },
-  itemContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 8,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    marginBottom: 10,
-  },
-  itemLeft: {
-    flexDirection: "column",
+  itemDetails: {
+    flex: 1,
   },
   itemName: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 5,
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
   itemPrice: {
-    fontSize: 14,
-    color: "#888888",
+    fontSize: 16,
+    color: "#888",
+    marginBottom: 10,
   },
-  itemRight: {
+  quantityControl: {
     flexDirection: "row",
     alignItems: "center",
   },
-  itemButton: {
-    backgroundColor: "#EFEFEF",
-    borderRadius: 20,
+  quantityButton: {
+    backgroundColor: "#eee",
+    borderRadius: 5,
     width: 30,
     height: 30,
-    justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 5,
+    justifyContent: "center",
+    marginRight: 10,
   },
-  itemButtonText: {
+  quantityButtonText: {
     fontSize: 18,
-    fontWeight: "600",
-    color: "#555555",
+    fontWeight: "bold",
+    color: "#444",
   },
-  itemQuantity: {
-    fontSize: 16,
-    fontWeight: "600",
+  quantity: {
+    fontSize: 18,
+    fontWeight: "bold",
     marginHorizontal: 10,
   },
-  totalContainer: {
+  removeButton: {
+    backgroundColor: "#ff6666",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  removeButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  emptyCart: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyCartText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#888",
+  },
+  totalSection: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: "#FFFFFF",
     borderTopWidth: 1,
-    borderTopColor: "#DDDDDD",
+    borderTopColor: "#eee",
+    paddingTop: 20,
+    paddingBottom: 10,
+    marginTop: 20,
   },
   totalText: {
     fontSize: 18,
-    fontWeight: "600",
+    fontWeight: "bold",
+  },
+  totalAmount: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#33c37d",
   },
   checkoutButton: {
-    backgroundColor: "#35C759",
-    borderRadius: 8,
-    paddingVertical: 10,
+    backgroundColor: "#33c37d",
+    borderRadius: 5,
     paddingHorizontal: 20,
+    paddingVertical: 10,
+    alignItems: "center",
+    marginTop: 20,
   },
   checkoutButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
     fontSize: 16,
-    fontWeight: "600",
-    color: "#FFFFFF",
   },
 });

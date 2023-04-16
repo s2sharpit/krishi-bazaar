@@ -7,7 +7,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function Nav({ navigation }: { navigation: any }) {
   return (
     <View style={styles.nav}>
-      <TouchableOpacity style={styles.navItem}>
+      <TouchableOpacity
+        style={styles.navItem}
+        onPress={() => navigation.navigate("Home")}
+      >
         <MaterialIcons name="home" size={24} color={"black"} />
         <Text style={styles.title}>Home</Text>
       </TouchableOpacity>
@@ -27,7 +30,7 @@ export default function Nav({ navigation }: { navigation: any }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.navItem}
-        // onPress={() => navigation.navigate("Cart")}
+        onPress={() => navigation.navigate("Profile")}
       >
         <MaterialIcons name="person" size={24} color={"black"} />
         <Text style={styles.title}>My Profile</Text>
